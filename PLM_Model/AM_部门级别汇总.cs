@@ -12,14 +12,8 @@ namespace PLM_Model
         public string 部门名称 { get; set; }
 
         public int  Lever { get; set; }
-
-     
-
         public int Superior_ID { get; set; }
 
-        
-
-        //shahahaasdasdsssssasdasd
-       
+        //xxxx
     }
 }
