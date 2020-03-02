@@ -14,6 +14,6 @@ namespace PLM_Model
         public int  Lever { get; set; }
         public int Superior_ID { get; set; }
 
-        //xxxx
+        
     }
 }

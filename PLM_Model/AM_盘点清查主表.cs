@@ -23,7 +23,7 @@ namespace PLM_Model
 
         public string 是否关闭 { get; set; }
 
-        //xxxx
+        
                 
     }
 }
