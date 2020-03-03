@@ -29,10 +29,7 @@ namespace PLM_BusinessRlues
             return sql.查询一级结构();
         }
 
-        public List<AM_部门级别汇总> 查询部门汇总()
-        {
-            return sql.查询部门汇总();
-        }
+
         
 
         public int 查询设备总数()
