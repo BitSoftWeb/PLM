@@ -56,8 +56,8 @@ namespace PLM_SQLDAL
             if (ID > 0)
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append(" select * from (select row_number() over(order by dbo.c_设备故障维修表.故障时间 desc) as row ,*  from c_设备故障维修表");
-                sb.Append(" where ID>0 and   对应单位= " + ID);
+                sb.Append(" select * from (select row_number() over(order by dbo.c_设备故障维修表.ID desc) as row ,*  from c_设备故障维修表");
+                sb.Append(" where    对应单位= " + ID);
                 sb.Append(" and(设备编号 like '%" + 关键字 + "%' or 设备名称 like '%" + 关键字 + "%')");
 
                 sb.Append("  and YEAR(故障时间) = " + Year);
@@ -69,17 +69,21 @@ namespace PLM_SQLDAL
                 sb.Append((PageIndex + 1) * PageSize);
                 sb.Append(" order by row desc");
                 return DBHelper.ExecuteDataset(DBHelper.ConnectionString, CommandType.Text, sb.ToString());
+
+
+           
+
             }
             else
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append(" select * from (select row_number() over(order by dbo.c_设备故障维修表.故障时间 desc) as row ,*  from c_设备故障维修表");
-                sb.Append(" where ID>0   ");
+                sb.Append(" select * from (select row_number() over(order by dbo.c_设备故障维修表.ID desc) as row ,*  from c_设备故障维修表");
+                sb.Append(" where  ");
                 //if (起始时间 != "" && 截止时间 != "")
                 //{
                 //    sb.Append(" and  故障时间  between  '" + 起始时间 + "' and '" + 截止时间 + "'");
                 //}
-                sb.Append("  and YEAR(故障时间) = " + Year);
+                sb.Append("   YEAR(故障时间) = " + Year);
                 sb.Append(" and(设备编号 like '%" + 关键字 + "%' or 设备名称 like '%" + 关键字 + "%')");
                 sb.Append("  )  as tt ,SYS_BD_一级机构表 where tt.对应单位 = SYS_BD_一级机构表.ID  ");
                 sb.Append("and ");
@@ -88,6 +92,8 @@ namespace PLM_SQLDAL
                 sb.Append(" and ");
                 sb.Append((PageIndex + 1) * PageSize);
                 sb.Append(" order by row desc");
+
+
                 return DBHelper.ExecuteDataset(DBHelper.ConnectionString, CommandType.Text, sb.ToString());
             }
 
