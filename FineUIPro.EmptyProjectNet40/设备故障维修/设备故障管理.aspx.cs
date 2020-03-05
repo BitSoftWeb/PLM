@@ -234,19 +234,6 @@ namespace FineUIPro.EmptyProjectNet40.设备故障维修
 
         protected void 二级单位_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //string 起始日期 = "";
-            //string 截止日期 = "";
-            //try
-            //{
-            //    起始日期 = DatePicker1.SelectedDate.Value.ToString("yyyy-MM-dd");
-            //    截止日期 = DatePicker2.SelectedDate.Value.ToString("yyyy-MM-dd");
-            //}
-            //catch (Exception)
-            //{
-            //    起始日期 = "";
-            //    截止日期 = "";
-
-            //}
             int ID = Convert.ToInt32(二级单位.SelectedValue);
             int year = 0;
             if (年份.SelectedText == "" || 年份.SelectedText==null)

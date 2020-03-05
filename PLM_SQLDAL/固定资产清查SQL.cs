@@ -63,7 +63,7 @@ namespace PLM_SQLDAL
                 sb.Append(" ,b.三级部门名称,b.操作人,b.操作日期,b.盘点类型,b.帐物是否相符,b.盘盈或盘亏简要原因,b.闲置或待报废简要原因 ");
                 sb.Append(" from 设备_设备信息表 , AM_已盘点设备表 as b  where b.设备编号 = 设备_设备信息表.设备编号 and 盘点主表ID =" + 盘点主表ID);
                 sb.Append(" and b.三级部门ID =" + 部门ID);
-                sb.Append(" and b.盘点类型='"+盘点类型+"'");
+                sb.Append(" and b.盘点类型='" + 盘点类型 + "'");
                 sb.Append(" )as tt  ");
                 sb.Append(" where");
                 sb.Append(" row between ");
@@ -252,14 +252,14 @@ namespace PLM_SQLDAL
         }
 
 
-        public int 查询已盘点总数(int 盘点主表ID,int 部门ID, string rank,string 盘点类型) 
+        public int 查询已盘点总数(int 盘点主表ID, int 部门ID, string rank, string 盘点类型)
         {
             string sql = "";
             if (rank != "全部")
             {
                 sql = string.Format(" SELECT  COUNT(*) AS 总数 FROM AM_已盘点设备表 as a , 设备_设备信息表 as b where A.设备台账ID = B.ID AND A.盘点主表ID ={0}  AND A.三级部门ID ={1} AND A.盘点类型 = '{2}'", 盘点主表ID, 部门ID, 盘点类型);
             }
-            else 
+            else
             {
                 sql = string.Format(" SELECT  COUNT(*) AS 总数 FROM AM_已盘点设备表 as a , 设备_设备信息表 as b where A.设备台账ID = B.ID AND A.盘点主表ID ={0}  AND A.二级部门ID ={1} AND A.盘点类型 = '{2}'", 盘点主表ID, 部门ID, 盘点类型);
             }
@@ -326,41 +326,70 @@ namespace PLM_SQLDAL
                 sb.Append(" SELECT ( select COUNT(*) FROM AM_已盘点设备表 AS A  ");
                 sb.Append(" INNER JOIN dbo.AM_盘点清查主表 AS B ON  A.盘点主表ID = B.ID ");
                 sb.Append("  INNER JOIN dbo.AM_盘点清查主表 as c on A.盘点主表ID = c.ID ");
-                sb.Append(" WHERE  三级部门ID ="+item.ID);
-                sb.Append(" and C.盘点名称= '" + 盘点任务名称+"'");
+                sb.Append(" WHERE  三级部门ID =" + item.ID);
+                sb.Append(" and C.盘点名称= '" + 盘点任务名称 + "'");
                 sb.Append(")AS 已盘点,");
                 sb.Append("( SELECT  COUNT(*) 总数 FROM  dbo.设备_设备信息表 AS A");
                 sb.Append(" INNER JOIN 部门表 AS B  ON A.使用单位 = B.ID");
                 sb.Append(" INNER JOIN 用户_单位表 AS C ON b.所属单位 = C.ID");
                 sb.Append(" where B.ID =" + item.ID + ") AS 设备总数");
-                 SqlDataReader readpd = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sb.ToString());
-                 while (readpd.Read())
-                 {
-                     model.生产设备已盘点 = Convert.ToInt32(readpd["已盘点"]);
-                     model.生产设备总数 = Convert.ToInt32(readpd["设备总数"]);
+                SqlDataReader readpd = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sb.ToString());
+                while (readpd.Read())
+                {
+                    model.生产设备已盘点 = Convert.ToInt32(readpd["已盘点"]);
+                    model.生产设备总数 = Convert.ToInt32(readpd["设备总数"]);
 
-                     model.办公设备总数 = 0;
-                     model.办公设备已盘点 = 0;
+                    model.办公设备总数 = 0;
+                    model.办公设备已盘点 = 0;
 
-                     model.传导设备总数 = 0;
-                     model.传导设备已盘点 = 0;
+                    model.传导设备总数 = 0;
+                    model.传导设备已盘点 = 0;
 
-                     model.建筑物总数 = 0;
-                     model.建筑物已盘点 = 0;
+                    model.建筑物总数 = 0;
+                    model.建筑物已盘点 = 0;
 
-                     model.工装总数 = 0;
-                     model.工装已盘点 = 0;
-                     model.盘点任务名称 = 盘点任务名称;
-                 }
-                 readpd.Close();
-                 listpd.Add(model);
+                    model.工装总数 = 0;
+                    model.工装已盘点 = 0;
+                    model.盘点任务名称 = 盘点任务名称;
+                }
+                readpd.Close();
+                listpd.Add(model);
             }
             return listpd;
 
         }
 
+        #region 关闭盘点时查询当前正在进行的盘点，也可以查询关闭的盘点
+        public List<AM_盘点清查主表> 查询盘点清查主表(string 是否关闭)
+        {
+            string sql = string.Format("select * from dbo.AM_盘点清查主表  where 是否关闭='{0}'", 是否关闭);
+            SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());
+            List<AM_盘点清查主表> listmodel = new List<AM_盘点清查主表>();
+            while (read.Read())
+            {
+                AM_盘点清查主表 model = new AM_盘点清查主表();
+                model.ID = Convert.ToInt32(read["ID"]);
+                model.创建人 = read["创建人"].ToString();
+                model.盘点范围 = read["盘点范围"].ToString();
+                model.盘点方式 = read["盘点方式"].ToString();
+                model.创建时间 = Convert.ToDateTime(read["创建时间"].ToString());
+                model.盘点名称 = read["盘点名称"].ToString();
+                model.备注 = read["备注"].ToString();
+                model.是否关闭 = read["是否关闭"].ToString();
+                listmodel.Add(model);
+            }
+            read.Close();
+            return listmodel;
+        }
 
-        public List<盘点统计> 查询盘点统计(int 盘点主表ID,string 盘点任务名称) 
+        public int 关闭清查盘点(int ID)
+        {
+            string sql = string.Format("UPDATE dbo.AM_盘点清查主表  SET 是否关闭 = '是' where ID = {0}",ID);
+            return Convert.ToInt32(DBHelper.ExecuteNonQuery(DBHelper.ConnectionString, CommandType.Text, sql));
+        }
+        #endregion
+
+        public List<盘点统计> 查询盘点统计(int 盘点主表ID, string 盘点任务名称)
         {
             string sql = string.Format(" SELECT * FROM 用户_单位表  order by ID");
             SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());

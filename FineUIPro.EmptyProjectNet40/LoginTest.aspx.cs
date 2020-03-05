@@ -1,5 +1,4 @@
 ﻿using FineUIPro;
-using FineUIPro;
 using PLM.BusinessRlues;
 using PLM_Model;
 using System;

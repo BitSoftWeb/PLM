@@ -100,6 +100,7 @@
     <Content Include="index.aspx" />
     <Content Include="hello.aspx" />
     <Content Include="LoginTest.aspx" />
+    <Content Include="NewLogin.aspx" />
     <Content Include="PLM设备信息\HtmlPage1.html" />
     <Content Include="PLM设备信息\全生命周期页面.aspx" />
     <Content Include="PLM设备信息\圆形进度条.aspx" />
@@ -1888,6 +1889,13 @@
     </Compile>
     <Compile Include="LoginTest.aspx.designer.cs">
       <DependentUpon>LoginTest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NewLogin.aspx.cs">
+      <DependentUpon>NewLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewLogin.aspx.designer.cs">
+      <DependentUpon>NewLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="PLM设备信息\QrCodeNet.cs" />
     <Compile Include="PLM设备信息\全生命周期页面.aspx.cs">
