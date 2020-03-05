@@ -17,7 +17,7 @@ namespace PLM_SQLDAL
 
         public List<Z_一级结构表> 查询一级结构()
         {
-            string sql = "SELECT * from SYS_BD_一级部门表";
+            string sql = "SELECT * from SYS_BD_一级机构表";
             SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());
             List<Z_一级结构表> listonejg = new List<Z_一级结构表>();
             while (read.Read())
@@ -32,29 +32,13 @@ namespace PLM_SQLDAL
             return listonejg;
         }
 
-        public List<AM_部门级别汇总> 查询部门汇总()
-        {
-            string sql = "SELECT ID,部门名称,Level from SYS_BD_一级部门表  ";
-            string sqltwo = "select ID,部门名称,Superior_ID,Level from   SYS_BD_二级部门表  ";
-            SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());
-            List<AM_部门级别汇总> listmodel = new List<AM_部门级别汇总>();
-            while (read.Read())
-            {
-                AM_部门级别汇总 model = new AM_部门级别汇总();
-                model.ID = Convert.ToInt32(read["ID"].ToString());
-                model.部门名称 = read["部门名称"].ToString();
-                model.Lever = Convert.ToInt32(read["Level"].ToString());
-                listmodel.Add(model);
-            }
-            read.Close();
-            return listmodel;
-        }
+
 
 
 
         public List<用户单位表> 查询二级结构(int 一级结构ID)
         {
-            string sql = string.Format("SELECT * from SYS_BD_二级部门表 where Superior_ID ={0}   order by 部门名称 desc", 一级结构ID);
+            string sql = string.Format("SELECT * from SYS_BD_二级机构表 where Superior_ID ={0}   order by 部门名称 desc", 一级结构ID);
             SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());
             List<用户单位表> listyhdw = new List<用户单位表>();
             while (read.Read())
@@ -85,7 +69,7 @@ namespace PLM_SQLDAL
 
         public List<部门表> 查询三级结构(int 二级结构ID)
         {
-            string sql = string.Format("SELECT * from SYS_BD_三级部门表 where Superior_ID ={0}", 二级结构ID);
+            string sql = string.Format("SELECT * from SYS_BD_三级机构表 where Superior_ID ={0}", 二级结构ID);
             SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());
             List<部门表> listbm = new List<部门表>();
             while (read.Read())
@@ -110,7 +94,7 @@ namespace PLM_SQLDAL
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append("SELECT A.*,B.部门名称 AS 部门名称, C.部门名称 AS 单位名称 FROM	 ");
-                sb.Append("设备_设备信息表 AS A ,dbo.SYS_BD_二级部门表 AS B , dbo.SYS_BD_三级部门表 AS C where A.使用单位 = C.ID and  b.ID=C.Superior_ID ");
+                sb.Append("设备_设备信息表 AS A ,dbo.SYS_BD_一级机构表 AS B , dbo.SYS_BD_三级机构表 AS C where A.使用单位 = C.ID and  b.ID=C.Superior_ID ");
                 if (rank == "二级")
                 {
                     sb.Append("and B.ID =" + ID);
@@ -128,7 +112,7 @@ namespace PLM_SQLDAL
 
             StringBuilder sb = new StringBuilder();
             sb.Append("SELECT COUNT(*) 总数 FROM	 ");
-            sb.Append("设备_设备信息表 AS A ,dbo.SYS_BD_二级部门表 AS B , dbo.SYS_BD_三级部门表 AS C where A.使用单位 = C.ID and b.ID=C.Superior_ID ");
+            sb.Append("设备_设备信息表 AS A ,dbo.SYS_BD_一级机构表 AS B , dbo.SYS_BD_三级机构表 AS C where A.使用单位 = C.ID and b.ID=C.Superior_ID ");
             if (rank == "二级")
             {
                 sb.Append("and B.ID =" + ID);
@@ -165,7 +149,7 @@ namespace PLM_SQLDAL
 
         public DataSet 设备名称关联备件(string sbmc, int 所属单位)
         {
-            string sql = string.Format("select 成本中心 from dbo.SYS_BD_三级部门表 where ID = {0}", 所属单位);
+            string sql = string.Format("select 成本中心 from dbo.SYS_BD_三级机构表 where ID = {0}", 所属单位);
             string 成本中心 = "";
             SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());
             while (read.Read())

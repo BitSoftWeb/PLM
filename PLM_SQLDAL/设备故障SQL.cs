@@ -19,7 +19,7 @@ namespace PLM_SQLDAL
                 StringBuilder sb = new StringBuilder();
                 sb.Append(" select TOP(200) a.ID, a.设备编号,a.设备名称, a.故障描述,a.故障时间,a.更换备件,a.故障分析 as 问题描述,");
                 sb.Append("  a.维修措施 as 问题的可能影响,a.解决故障时间,a.修理费用,a.报修人,a.维修人,a.维修人数,a.维修工时,a.维修人员名单,a.原因分析, ");
-                sb.Append("  a.开始维修时间,a.解决方案及计划,a. 解决故障根本问题的办法,a.完成情况 ,b.名称 from dbo.c_设备故障维修表 as a , SYS_BD_二级部门表 as b ");
+                sb.Append("  a.开始维修时间,a.解决方案及计划,a. 解决故障根本问题的办法,a.完成情况 ,b.名称 from dbo.c_设备故障维修表 as a , SYS_BD_一级机构表 as b ");
                 sb.Append(" where a.对应单位=b.ID and a.对应单位 = " + ID);
                 if (起始时间 != "" && 截止时间 != "")
                 {
@@ -38,7 +38,7 @@ namespace PLM_SQLDAL
                 StringBuilder sb = new StringBuilder();
                 sb.Append(" select TOP(200) a.ID, a.设备编号,a.设备名称, a.故障描述,a.故障时间,a.更换备件,a.故障分析 as 问题描述,");
                 sb.Append("  a.维修措施 as 问题的可能影响,a.解决故障时间,a.修理费用,a.报修人,a.维修人,a.维修人数,a.维修工时,a.维修人员名单,a.原因分析, ");
-                sb.Append("  a.开始维修时间,a.解决方案及计划,a. 解决故障根本问题的办法,a.完成情况 ,b.名称 from dbo.c_设备故障维修表 as a , SYS_BD_二级部门表 as b ");
+                sb.Append("  a.开始维修时间,a.解决方案及计划,a. 解决故障根本问题的办法,a.完成情况 ,b.名称 from dbo.c_设备故障维修表 as a , SYS_BD_一级机构表 as b ");
                 sb.Append(" where a.对应单位=b.ID  ");
                 if (起始时间 != "" && 截止时间 != "")
                 {
@@ -56,12 +56,12 @@ namespace PLM_SQLDAL
             if (ID > 0)
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append(" select * from (select row_number() over(order by dbo.c_设备故障维修表.故障时间 desc) as row ,*  from c_设备故障维修表");
-                sb.Append(" where ID>0 and   对应单位= " + ID);
+                sb.Append(" select * from (select row_number() over(order by dbo.c_设备故障维修表.ID desc) as row ,*  from c_设备故障维修表");
+                sb.Append(" where    对应单位= " + ID);
                 sb.Append(" and(设备编号 like '%" + 关键字 + "%' or 设备名称 like '%" + 关键字 + "%')");
 
                 sb.Append("  and YEAR(故障时间) = " + Year);
-                sb.Append("  )  as tt ,SYS_BD_二级部门表 where tt.对应单位 = SYS_BD_二级部门表.ID  ");
+                sb.Append("  )  as tt ,SYS_BD_一级机构表 where tt.对应单位 = SYS_BD_一级机构表.ID  ");
                 sb.Append("and ");
                 sb.Append("row between ");
                 sb.Append(PageIndex * PageSize);
@@ -69,25 +69,31 @@ namespace PLM_SQLDAL
                 sb.Append((PageIndex + 1) * PageSize);
                 sb.Append(" order by row desc");
                 return DBHelper.ExecuteDataset(DBHelper.ConnectionString, CommandType.Text, sb.ToString());
+
+
+           
+
             }
             else
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append(" select * from (select row_number() over(order by dbo.c_设备故障维修表.故障时间 desc) as row ,*  from c_设备故障维修表");
-                sb.Append(" where ID>0   ");
+                sb.Append(" select * from (select row_number() over(order by dbo.c_设备故障维修表.ID desc) as row ,*  from c_设备故障维修表");
+                sb.Append(" where  ");
                 //if (起始时间 != "" && 截止时间 != "")
                 //{
                 //    sb.Append(" and  故障时间  between  '" + 起始时间 + "' and '" + 截止时间 + "'");
                 //}
-                sb.Append("  and YEAR(故障时间) = " + Year);
+                sb.Append("   YEAR(故障时间) = " + Year);
                 sb.Append(" and(设备编号 like '%" + 关键字 + "%' or 设备名称 like '%" + 关键字 + "%')");
-                sb.Append("  )  as tt ,SYS_BD_二级部门表 where tt.对应单位 = SYS_BD_二级部门表.ID  ");
+                sb.Append("  )  as tt ,SYS_BD_一级机构表 where tt.对应单位 = SYS_BD_一级机构表.ID  ");
                 sb.Append("and ");
                 sb.Append("row between ");
                 sb.Append(PageIndex * PageSize);
                 sb.Append(" and ");
                 sb.Append((PageIndex + 1) * PageSize);
                 sb.Append(" order by row desc");
+
+
                 return DBHelper.ExecuteDataset(DBHelper.ConnectionString, CommandType.Text, sb.ToString());
             }
 
@@ -110,7 +116,7 @@ namespace PLM_SQLDAL
 
         public List<用户单位表> 查询二级单位()
         {
-            string sql = "  SELECT * FROM SYS_BD_二级部门表 where Superior_ID = 1";
+            string sql = "  SELECT * FROM SYS_BD_一级机构表";
             SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());
             List<用户单位表> list = new List<用户单位表>();
             用户单位表 modelx = new 用户单位表();

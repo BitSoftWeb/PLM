@@ -83,12 +83,12 @@ namespace FineUIPro.EmptyProjectNet40.PLM设备信息
 
         private void BindEnumrable()
         {
-            List<AM_部门级别汇总> listonejg = bll.查询部门汇总();
+            List<Z_一级结构表> listonejg = bll.查询一级结构();
             List<JQueryFeature> myList = new List<JQueryFeature>();
 
-            foreach (AM_部门级别汇总 item in listonejg)
+            foreach (Z_一级结构表 item in listonejg)
             {
-                myList.Add(new JQueryFeature(item.ID.ToString(), item.部门名称, 0, true));
+                myList.Add(new JQueryFeature(item.ID.ToString(), item.名称, 0, true));
                 List<用户单位表> listyhdw = bll.查询二级结构(item.ID);
                 foreach (var itemtwo in listyhdw)
                 {

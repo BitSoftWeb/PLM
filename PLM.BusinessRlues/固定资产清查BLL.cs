@@ -66,6 +66,15 @@ namespace PLM.BusinessRlues
         {
             return sql.查询三级部门盘点信息(盘点主表ID, 盘点任务名称);
         }
-        
+
+        public List<AM_盘点清查主表> 查询盘点清查主表(string 是否关闭) 
+        {
+            return sql.查询盘点清查主表(是否关闭);
+        }
+        //根据ID关闭清查盘点
+        public int 关闭清查盘点(int ID) 
+        {
+            return sql.关闭清查盘点(ID);
+        }
     }
 }

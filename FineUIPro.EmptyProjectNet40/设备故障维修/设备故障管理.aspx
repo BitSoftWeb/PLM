@@ -64,7 +64,6 @@
                         </f:FormRow>
                     </Rows>
                 </f:Form>
-                <%-- <f:Grid ID="GridGZ" Title="数据表格" PageSize="15" IsFluid="true" ShowBorder="true" BoxFlex="1" AllowPaging="true" IsDatabasePaging="false" ShowHeader="true" runat="server" DataKeyNames="ID,完成情况,设备编号,设备名称,故障描述,故障时间,解决故障时间,更换备件,问题描述,问题的可能影响,修理费用,报修人,维修人,名称,维修人数,维修工时,维修人员名单,原因分析,开始维修时间,解决方案及计划,解决故障根本问题的办法" OnRowCommand="Grid1_RowCommand" OnRowDataBound="Grid1_RowDataBound">--%>
 
 
                 <f:Grid ID="GridGZ" IsFluid="true" CssClass="blockpanel" Title="设备故障数据" EnableCollapse="false" PageSize="15" ShowBorder="true" ShowHeader="true"
@@ -179,37 +178,9 @@
 
                                     </Items>
                                 </f:Tab>
-                                <%--       <f:Tab Title="关联备件" BodyPadding="10px" Layout="Fit" runat="server" IconUrl="../res/icon/arrow_switch.png">
-                                    <Items>
-                                    </Items>
-                                </f:Tab>
-
-                                <f:Tab Title="维修记录" BodyPadding="10px" runat="server" IconUrl="../res/icon/asterisk_orange.png">
-                                    <Items>
-                                    </Items>
-                                </f:Tab>
-
-                                <f:Tab Title="设备BOM" BodyPadding="10px" runat="server" IconUrl="../res/icon/asterisk_orange.png">
-                                    <Items>
-                                    </Items>
-                                </f:Tab>
-                                <f:Tab Title="备件消耗汇总" BodyPadding="10px" runat="server" IconUrl="../res/icon/asterisk_orange.png">
-                                    <Items>
-                                    </Items>
-                                </f:Tab>
-                                <f:Tab Title="预防性维修" BodyPadding="10px" runat="server" IconUrl="../res/icon/asterisk_orange.png">
-                                    <Items>
-                                    </Items>
-
-                                </f:Tab>--%>
+                               
                             </Tabs>
                         </f:TabStrip>
-
-                        <%--        <f:Button ID="Button3" CssClass="marginr" ValidateForms="SimpleForm1"
-                            Text="验证第一个标签中的表单" runat="server">
-                        </f:Button>
-                        <f:Button ID="Button4" Text="打开下一个标签"  runat="server">
-                        </f:Button>--%>
                     </Items>
                     <Toolbars>
                         <f:Toolbar ID="Toolbar1" Position="Bottom" ToolbarAlign="Right" runat="server">
