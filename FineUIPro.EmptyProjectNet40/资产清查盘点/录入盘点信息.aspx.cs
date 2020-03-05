@@ -23,7 +23,6 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
 
                 btnNew.OnClientClick = Confirm.GetShowReference("确定提交当前页盘点信息？", String.Empty, MessageBoxIcon.Question, btnNew.GetPostBackEventReference(), String.Empty);
                 LoadData();
-                OffSession();
 
                 //DataTable table = GetSourceData();
                 //Grid1.DataSource = bll.测试查询转向架台账数据(2);
@@ -31,31 +30,11 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
             }
         }
 
-        private void OffSession()
-        {
-            try
-            {
-                if (Session["用户名"].ToString() == null)
-                {
-                    Response.Write("<script>alert('Session已失效，请点击系统名称返回登录页面')</script>");
-                    Response.End();
-                }
-                else 
-                {
-                   //不等于null
-                }
-            }
-            catch (Exception)
-            {
-                Response.Write("<script>alert('Session已失效，请点击系统名称返回登录页面')</script>");
-                Response.End();
-            }
-        }
+     
         private void LoadData()
         {
             //绑定单位
             //把二级部门绑定上
-            OffSession();
             int 用户二级部门ID = Convert.ToInt32(Session["二级部门ID"]);
 
             username = Session["用户名"].ToString();
@@ -77,11 +56,21 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
 
 
             List<AM_盘点清查主表> listpd = bll.查询盘点主表();
-            盘点名称.DataTextField = "盘点名称";
-            盘点名称.DataValueField = "ID";
-            盘点名称.DataSource = listpd;
-            盘点名称.DataBind();
 
+
+            if (listpd.Count == 0)
+            {
+                盘点名称.Text = "当前没有正在进行的任务";
+                Grid1.EmptyText = "<div class=\"grid-empty-text\">Oops...一条数据也没有找到！</div>";
+                SelectContentBtn.Enabled = false;
+            }
+            else 
+            {
+                盘点名称.DataTextField = "盘点名称";
+                盘点名称.DataValueField = "ID";
+                盘点名称.DataSource = listpd;
+                盘点名称.DataBind();
+            }
         }
 
         public DataTable GetSourceData()
@@ -113,7 +102,6 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
 
         protected void SelectContentBtn_Click(object sender, EventArgs e)
         {
-            OffSession();
             if (盘点名称.SelectedText == "" || 盘点名称.SelectedText == null)
             {
                 Alert alert = new Alert();
@@ -186,7 +174,6 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
 
         protected void 三级单位_SelectedIndexChanged(object sender, EventArgs e)
         {
-            OffSession();
             int ID = 0;
             string name = 三级单位.SelectedText;
             if (name == "全部")
@@ -212,7 +199,6 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
 
         protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
         {
-            OffSession();
             int ID = 0;
             string name = 三级单位.SelectedText;
             if (name == "全部")
@@ -237,7 +223,6 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
 
         protected void ddlPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
-            OffSession();
             Grid1.PageSize = Convert.ToInt32(ddlPageSize.SelectedValue);
 
             int ID = 0;
