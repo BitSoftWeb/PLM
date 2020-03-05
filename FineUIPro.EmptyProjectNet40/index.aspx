@@ -4,7 +4,7 @@
 
 <html>
 <head runat="server">
-     <meta name="sourcefiles" content="~/消息中心/消息中心首页.aspx" />
+    <meta name="sourcefiles" content="~/消息中心/消息中心首页.aspx" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>资产全生命周期管理系统</title>
     <link href="~/res/css/index.css" rel="stylesheet" />
@@ -19,17 +19,20 @@
                         <table>
                             <tr>
                                 <td>
-                                    <f:Button runat="server" CssClass="icononlyaction" ID="btnHomePage" ToolTip="官网首页" IconAlign="Top" IconFont="_Home"
+                                    <f:Button runat="server" CssClass="icononlyaction" IconUrl="~/res/images/qsmzq.png" ID="btnHomePage" ToolTip="官网首页" IconAlign="Top" IconFont="_Home"
                                         EnablePostBack="false" EnableDefaultState="false" EnableDefaultCorner="false"
                                         OnClientClick="window.open('http://fineui.com/pro/','_blank');">
                                     </f:Button>
+                                    <%--    <f:Image ID="Image3" runat="server" ImageWidth="64" ImageHeight="64" ImageCssStyle="border:solid 1px #ccc;padding:5px;"
+                                        ImageUrl="~/res/images/qsmzq.png">
+                                    </f:Image>--%>
                                     <a class="logo" href="./LoginTest.aspx" title="资产全生命周期管理系统">资产全生命周期管理系统
                                     </a>
                                 </td>
                                 <td style="text-align: right;">
-                                    <f:Button runat="server" CssClass="icontopaction themes" ID="btnThemeSelect"  Text="消息中心(8)" IconAlign="Top" IconUrl="~/res/images/message.png"
-                                        EnablePostBack="false" EnableDefaultState="false" EnableDefaultCorner="false" OnClientClick="openHelloFineUI();"> 
-                                    <%--<Listeners>
+                                    <f:Button runat="server" CssClass="icontopaction themes" ID="btnThemeSelect" Text="消息中心(8)" IconAlign="Top" IconUrl="~/res/images/message.png"
+                                        EnablePostBack="false" EnableDefaultState="false" EnableDefaultCorner="false" OnClientClick="openHelloFineUI();">
+                                        <%--<Listeners>
                                             <f:Listener Event="click" Handler="onThemeSelectClick" />
                                         </Listeners>--%>
                                     </f:Button>
@@ -61,45 +64,71 @@
                         <f:Tree runat="server" ShowBorder="false" ShowHeader="false" ID="treeMenu" EnableSingleClickExpand="true"
                             HeaderStyle="true" HideHScrollbar="true" HideVScrollbar="true" ExpanderToRight="true">
                             <Nodes>
-                                <f:TreeNode Text="我的流程" IconUrl="res/icon/user_mature.png">
-                                    <f:TreeNode Text="发起流程" NavigateUrl="~/hello.aspx"></f:TreeNode>
-                                    <f:TreeNode Text="代办业务" NavigateUrl="~/login.aspx"></f:TreeNode>
-                                    <f:TreeNode Text="我的业务" NavigateUrl="~/login.aspx"></f:TreeNode>
-                                    <f:TreeNode Text="被退回" NavigateUrl="~/login.aspx"></f:TreeNode>
+                                <f:TreeNode Text="待办中心" IconUrl="res/icon/user_mature.png" NavigateUrl="School待办中心/代办业务.aspx">
                                 </f:TreeNode>
-                                <f:TreeNode Text="设备信息" IconUrl="res/icon/SB1.png" NavigateUrl="PLM设备信息/设备台账.aspx">
-                                    <%-- <f:TreeNode Text="设备全生命周期" NavigateUrl="PLM设备信息/设备台账.aspx" IconUrl="res/icon/QSMZQ1.png"></f:TreeNode>--%>
-                                    <%--  <f:TreeNode Text="设备卡片" NavigateUrl="PLM设备信息/圆形进度条.aspx"></f:TreeNode>--%>
-                                    <%--  <f:TreeNode Text="设备预防性维修" NavigateUrl="PLM设备信息/设备名称预防性维修.aspx"></f:TreeNode>--%>
-                                    <%-- <f:TreeNode Text="设备文档" NavigateUrl="~/login.aspx"></f:TreeNode>--%>
-                                </f:TreeNode>
-
-                                <f:TreeNode Text="设备运行管理" IconUrl="res/icon/SBYX.png">
-                                    <%-- <f:TreeNode Text="设备实时运行状态" NavigateUrl="~/hello.aspx"></f:TreeNode>--%>
-                                    <f:TreeNode Text="设备故障统计" NavigateUrl="设备故障维修/设备故障管理.aspx"></f:TreeNode>
-                                    <f:TreeNode Text="维修资源库" NavigateUrl="设备操作规程/EquipmentOperatingInstruction.aspx"></f:TreeNode>
-                                    <f:TreeNode Text="预防性维修" NavigateUrl="PLM设备信息/设备名称预防性维修.aspx"></f:TreeNode>
-                                    <%--   <f:TreeNode Text="设备点检巡检" NavigateUrl="~/login.aspx"></f:TreeNode>--%>
-                                    <f:TreeNode Text="设备密封润滑" NavigateUrl="~/login.aspx"></f:TreeNode>
-                                    <f:TreeNode Text="设备精度检测" NavigateUrl="设备运行管理/精度检测.aspx"></f:TreeNode>
+                                <f:TreeNode Text="基础信息管理" IconUrl="res/icon/SB1.png" NavigateUrl="PLM设备信息/设备台账.aspx">
+                                    <f:TreeNode Text="台账信息管理" NavigateUrl="PLM设备信息/设备台账.aspx" IconUrl="res/icon/QSMZQ1.png"></f:TreeNode>
+                                    <f:TreeNode Text="分类信息管理"></f:TreeNode>
+                                    <f:TreeNode Text="卡片信息管理"></f:TreeNode>
+                                    <f:TreeNode Text="备件信息管理"></f:TreeNode>
                                 </f:TreeNode>
 
 
+                                <f:TreeNode Text="计划管理" IconUrl="">
+                                    <f:TreeNode Text="采购计划"></f:TreeNode>
+                                    <f:TreeNode Text="维保计划"></f:TreeNode>
+                                    <f:TreeNode Text="润滑计划"></f:TreeNode>
+                                </f:TreeNode>
 
-                                <f:TreeNode Text="资产盘点" IconUrl="res/icon/PD.png">
+                                <f:TreeNode Text="购置验收管理" IconUrl="">
+                                    <f:TreeNode Text="购置信息"></f:TreeNode>
+                                    <f:TreeNode Text="资产来源信息"></f:TreeNode>
+                                    <f:TreeNode Text="合同信息"></f:TreeNode>
+                                    <f:TreeNode Text="验收信息"></f:TreeNode>
+                                </f:TreeNode>
+
+                                <f:TreeNode Text="盘点管理" IconUrl="res/icon/PD.png">
                                     <f:TreeNode Text="创建资产清查" NavigateUrl="资产清查盘点/创建清查盘点.aspx" IconUrl="res/icon/cjpd.png"></f:TreeNode>
                                     <f:TreeNode Text="固定资产清查" NavigateUrl="资产清查盘点/录入盘点信息.aspx" IconUrl="res/icon/zcqc1.png"></f:TreeNode>
                                     <f:TreeNode Text="已清查台账" NavigateUrl="资产清查盘点/查询已盘点数据.aspx" IconUrl="res/icon/wcpd.png"></f:TreeNode>
                                     <f:TreeNode Text="清查统计" NavigateUrl="资产清查盘点/盘点统计.aspx" IconUrl="res/icon/pdtj.png"></f:TreeNode>
                                 </f:TreeNode>
 
-                                <f:TreeNode Text="设备工程信息" IconUrl="res/icon/SBGC.png">
-                                  <%--  <f:TreeNode Text="处置信息" NavigateUrl="~/hello.aspx"></f:TreeNode>
-                                    <f:TreeNode Text="寿命预警" NavigateUrl="~/hello.aspx"></f:TreeNode>
-                                    <f:TreeNode Text="年度统计" NavigateUrl="~/hello.aspx"></f:TreeNode>--%>
+                                <f:TreeNode Text="处置管理" IconUrl="">
+                                    <f:TreeNode Text="报废管理"></f:TreeNode>
+                                    <f:TreeNode Text="报损管理"></f:TreeNode>
+                                    <f:TreeNode Text="变卖管理"></f:TreeNode>
+                                    <f:TreeNode Text="出租管理"></f:TreeNode>
+
+                                    <f:TreeNode Text="出借管理"></f:TreeNode>
+                                    <f:TreeNode Text="投资管理"></f:TreeNode>
+                                    <f:TreeNode Text="担保管理"></f:TreeNode>
+                                    <f:TreeNode Text="捐赠管理"></f:TreeNode>
                                 </f:TreeNode>
 
-                                <f:TreeNode Text="数据统计" IconUrl="res/icon/ZCTJ.png">
+
+                                <f:TreeNode Text="运维信息管理" IconUrl="res/icon/SBYX.png">
+                                    <%-- <f:TreeNode Text="设备实时运行状态" NavigateUrl="~/hello.aspx"></f:TreeNode>--%>
+                                    <f:TreeNode Text="故障维修信息" NavigateUrl="设备故障维修/设备故障管理.aspx"></f:TreeNode>
+                                    <f:TreeNode Text="维修资源库" NavigateUrl="设备操作规程/EquipmentOperatingInstruction.aspx"></f:TreeNode>
+                                    <f:TreeNode Text="预防性维修" NavigateUrl="PLM设备信息/设备名称预防性维修.aspx"></f:TreeNode>
+                                    <%--   <f:TreeNode Text="设备点检巡检" NavigateUrl="~/login.aspx"></f:TreeNode>--%>
+                                    <f:TreeNode Text="设备密封润滑" NavigateUrl="~/login.aspx"></f:TreeNode>
+                                    <f:TreeNode Text="设备精度检测" NavigateUrl="设备运行管理/精度检测.aspx"></f:TreeNode>
+                                    <f:TreeNode Text="定保小修信息"></f:TreeNode>
+                                    <f:TreeNode Text="点检巡检信息"></f:TreeNode>
+                                    <f:TreeNode Text="精度检修信息"></f:TreeNode>
+                                    <f:TreeNode Text="润滑信息"></f:TreeNode>
+
+                                </f:TreeNode>
+
+
+
+
+
+                             
+
+                                <f:TreeNode Text="统计查询" IconUrl="res/icon/ZCTJ.png">
                                     <f:TreeNode Text="设备统计分析" NavigateUrl="统计查询/设备统计分析.aspx"></f:TreeNode>
                                     <f:TreeNode Text="单位年度备件采购计划分析" NavigateUrl="备件统计分析/Spare_Part_YearAvgExpend.aspx"></f:TreeNode>
                                     <f:TreeNode Text="单位消耗备件费用年度统计" NavigateUrl="备件统计分析/Spare_Part_CompanyPrice.aspx"></f:TreeNode>

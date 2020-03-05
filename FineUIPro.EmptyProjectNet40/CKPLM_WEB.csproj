@@ -26,6 +26,7 @@
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>true</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,12 +40,13 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FineUIPro, Version=2.9.0.0, Culture=neutral, PublicKeyToken=9cbe753c029f291a, processorArchitecture=MSIL">
@@ -98,6 +100,7 @@
     <Content Include="index.aspx" />
     <Content Include="hello.aspx" />
     <Content Include="LoginTest.aspx" />
+    <Content Include="NewLogin.aspx" />
     <Content Include="PLM设备信息\HtmlPage1.html" />
     <Content Include="PLM设备信息\全生命周期页面.aspx" />
     <Content Include="PLM设备信息\圆形进度条.aspx" />
@@ -1840,7 +1843,6 @@
     <Content Include="消息中心\消息中心首页.aspx" />
     <Content Include="设备操作规程\EquipmentOperatingInstruction.aspx" />
     <Content Include="设备故障维修\设备故障管理.aspx" />
-    <Content Include="设备故障维修\设备故障首页.aspx" />
     <Content Include="统计查询\设备统计分析.aspx" />
     <Content Include="设备运行管理\导入excel.aspx" />
     <Content Include="设备运行管理\精度检测.aspx" />
@@ -1887,6 +1889,13 @@
     </Compile>
     <Compile Include="LoginTest.aspx.designer.cs">
       <DependentUpon>LoginTest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NewLogin.aspx.cs">
+      <DependentUpon>NewLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewLogin.aspx.designer.cs">
+      <DependentUpon>NewLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="PLM设备信息\QrCodeNet.cs" />
     <Compile Include="PLM设备信息\全生命周期页面.aspx.cs">
@@ -1982,13 +1991,6 @@
     </Compile>
     <Compile Include="设备故障维修\设备故障管理.aspx.designer.cs">
       <DependentUpon>设备故障管理.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="设备故障维修\设备故障首页.aspx.cs">
-      <DependentUpon>设备故障首页.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="设备故障维修\设备故障首页.aspx.designer.cs">
-      <DependentUpon>设备故障首页.aspx</DependentUpon>
     </Compile>
     <Compile Include="统计查询\设备统计分析.aspx.cs">
       <DependentUpon>设备统计分析.aspx</DependentUpon>

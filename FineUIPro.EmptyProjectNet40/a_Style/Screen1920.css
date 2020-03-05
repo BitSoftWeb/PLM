@@ -1,0 +1,41 @@
+﻿body {
+    
+
+}
+.td1 {
+    padding-top: 10px; 
+    padding-left: 30px;
+}
+.div1 {
+    margin-top: -40px; 
+    margin-left: 45px; 
+    font-size: 35px
+}
+.div2 {
+    color: #000000;
+    font-size: 30px; 
+    margin-top: 12px;
+   
+}
+.td2 {
+    text-align: left;
+}
+.div3 {
+    margin-top: 24px; 
+    font-size: 23px; 
+    color: #808080; 
+    margin-left: 5px;
+}
+.td3 {
+    width: 72%;
+    text-align: center;
+}
+.div4 {
+    margin-top: 27px
+}
+.div_middle {
+    background-image: url('/MenuImage/bk1.png');
+    height: 760px;
+    background-repeat: no-repeat;
+    width: 100%;
+}
