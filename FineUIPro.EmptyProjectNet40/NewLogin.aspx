@@ -10,7 +10,6 @@
     <title></title>
     <script>
         if (window.screen.width == 1600) {
-            alert(2);
             document.write('<link rel="stylesheet" href="a_Style/Screen1600.css">');
         }
             // 分辨率再在1024-1600的情况下，调用此css

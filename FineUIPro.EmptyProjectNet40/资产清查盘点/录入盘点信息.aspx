@@ -21,6 +21,21 @@
             background-color: #ff6a00;
             color: #fff;
         }
+
+
+         
+        .grid-empty-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            margin-left: -250px;
+            margin-top: -15px;
+
+            font-size: 24px;
+            text-align: center;
+        }
+
         /*.f-grid-row .f-grid-cell-盘盈或盘亏简要原因 {
             background-color: #b200ff;
             color: #fff;
