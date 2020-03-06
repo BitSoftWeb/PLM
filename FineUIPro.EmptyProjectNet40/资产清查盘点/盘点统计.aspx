@@ -17,8 +17,12 @@
                             <Items>
                                 <f:DropDownList ID="盘点名称" Width="250px" runat="server" Label="盘点名称" LabelWidth="90" AutoPostBack="true" Required="true">
                                 </f:DropDownList>
-                                <f:TextBox runat="server" Label="单位名称" ID="二级单位" Width="250px" LabelWidth="90" Enabled="false"></f:TextBox>
-                                <f:DropDownList ID="三级单位" Width="250px" runat="server" Label="部门名称" LabelWidth="90" AutoPostBack="true" AutoSelectFirstItem="false" EmptyText="全部" OnSelectedIndexChanged="三级单位_SelectedIndexChanged">
+                                <%--<f:TextBox runat="server" Label="单位名称" ID="二级单位" Width="250px" LabelWidth="90" Enabled="false"></f:TextBox>--%>
+
+                                 <f:DropDownList ID="二级单位" Width="250px" runat="server" Label="二级单位" LabelWidth="90" AutoPostBack="true"   OnSelectedIndexChanged="二级单位_SelectedIndexChanged">
+                                </f:DropDownList>
+
+                                <f:DropDownList ID="三级单位" Width="250px" runat="server" Label="三级单位" LabelWidth="90" AutoPostBack="true" OnSelectedIndexChanged="三级单位_SelectedIndexChanged">
                                 </f:DropDownList>
                                 <f:DropDownList ID="盘点类型" runat="server" Label="盘点类型" LabelWidth="90" AutoPostBack="true">
                                     <f:ListItem Text="生产设备" Value="生产设备" />

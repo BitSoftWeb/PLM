@@ -15,18 +15,29 @@ namespace PLM_SQLDAL
 
         public List<用户单位表> 查询用户二级单位(int ID)
         {
-            string sql = string.Format("SELECT * FROM 用户_单位表 where ID = {0}", ID);
-            SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());
+            string sql = "";
             List<用户单位表> list = new List<用户单位表>();
-            //用户单位表 modelx = new 用户单位表();
-            //modelx.ID = 0;
-            //modelx.名称 = "全部";
-            //list.Add(modelx);
+            //5是资产部管理部门
+            if (ID == 5)
+            {
+                用户单位表 model = new 用户单位表();
+                model.ID = 0;
+                model.名称 = "全部";
+                list.Add(model);
+                sql = ("SELECT * FROM SYS_BD_二级机构表 ");
+            }
+            else 
+            {
+                sql = string.Format("SELECT * FROM SYS_BD_二级机构表 where ID = {0}", ID);
+            }
+           
+            SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());
+           
             while (read.Read())
             {
                 用户单位表 model = new 用户单位表();
                 model.ID = Convert.ToInt32(read["ID"]);
-                model.名称 = read["名称"].ToString();
+                model.名称 = read["部门名称"].ToString();
                 list.Add(model);
             }
             return list;
@@ -35,18 +46,20 @@ namespace PLM_SQLDAL
 
         public List<部门表> 查询用户所在三级部门(int ID)
         {
-            string sql = string.Format("select * from 部门表 where 所属单位 = {0}", ID);
-            SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());
+            string sql = "";
             List<部门表> list = new List<部门表>();
+      
             部门表 modelx = new 部门表();
             modelx.ID = 0;
             modelx.名称 = "全部";
             list.Add(modelx);
+            sql = string.Format("select * from SYS_BD_三级机构表 where Superior_ID = {0}", ID);
+            SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());
             while (read.Read())
             {
                 部门表 model = new 部门表();
                 model.ID = Convert.ToInt32(read["ID"]);
-                model.名称 = read["名称"].ToString();
+                model.名称 = read["部门名称"].ToString();
                 list.Add(model);
             }
             return list;
@@ -107,7 +120,11 @@ namespace PLM_SQLDAL
                 sb.Append(" 设备_设备信息表.制造商,设备_设备信息表.投产时间,设备_设备信息表.设备规格, b.ID as 已盘点ID ,b.盘点主表ID,b.二级部门ID,b.三级部门ID,b.二级部门名称 ");
                 sb.Append(" ,b.三级部门名称,b.操作人,b.操作日期,b.盘点类型,b.帐物是否相符,b.盘盈或盘亏简要原因,b.闲置或待报废简要原因 ");
                 sb.Append(" from 设备_设备信息表 , AM_已盘点设备表 as b  where b.设备编号 = 设备_设备信息表.设备编号 and 盘点主表ID =" + 盘点主表ID);
-                sb.Append(" and b.二级部门ID =" + 部门ID);
+                if (部门ID!=0)
+                {
+                    sb.Append(" and b.二级部门ID =" + 部门ID);
+                }
+             
                 sb.Append(" and b.盘点类型='" + 盘点类型 + "'");
                 sb.Append(" )as tt  ");
                 sb.Append(" where");
@@ -261,7 +278,15 @@ namespace PLM_SQLDAL
             }
             else
             {
-                sql = string.Format(" SELECT  COUNT(*) AS 总数 FROM AM_已盘点设备表 as a , 设备_设备信息表 as b where A.设备台账ID = B.ID AND A.盘点主表ID ={0}  AND A.二级部门ID ={1} AND A.盘点类型 = '{2}'", 盘点主表ID, 部门ID, 盘点类型);
+                if (部门ID == 0)
+                {
+                    sql = string.Format(" SELECT  COUNT(*) AS 总数 FROM AM_已盘点设备表 as a , 设备_设备信息表 as b where A.设备台账ID = B.ID AND A.盘点主表ID ={0}   AND A.盘点类型 = '{1}'", 盘点主表ID, 盘点类型);
+                }
+                else 
+                {
+                    sql = string.Format(" SELECT  COUNT(*) AS 总数 FROM AM_已盘点设备表 as a , 设备_设备信息表 as b where A.设备台账ID = B.ID AND A.盘点主表ID ={0}  AND A.二级部门ID ={1} AND A.盘点类型 = '{2}'", 盘点主表ID, 部门ID, 盘点类型);
+                }
+              
             }
             return Convert.ToInt32(DBHelper.ExecuteScalar(DBHelper.ConnectionString, CommandType.Text, sql));
         }
@@ -274,9 +299,19 @@ namespace PLM_SQLDAL
 
         }
 
-        public List<AM_盘点清查主表> 查询盘点主表()
+        public List<AM_盘点清查主表> 查询盘点主表(string 是否关闭)
         {
-            string sql = "SELECT ID,盘点名称 FROM dbo.AM_盘点清查主表 where 是否关闭='否' order by 创建时间 desc";
+
+            string sql = "";
+            if (是否关闭 == "")
+            {
+                sql = "SELECT ID,盘点名称,是否关闭 FROM dbo.AM_盘点清查主表   order by 创建时间 desc";
+            }
+            else 
+            {
+                sql =string.Format("SELECT ID,盘点名称,是否关闭 FROM dbo.AM_盘点清查主表 where  是否关闭 ='{0}' order by 创建时间 desc", 是否关闭);
+            }
+
             SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());
             List<AM_盘点清查主表> list = new List<AM_盘点清查主表>();
             while (read.Read())
@@ -284,6 +319,11 @@ namespace PLM_SQLDAL
                 AM_盘点清查主表 model = new AM_盘点清查主表();
                 model.ID = Convert.ToInt32(read["ID"]);
                 model.盘点名称 = read["盘点名称"].ToString();
+                model.是否关闭 = read["是否关闭"].ToString();
+                if (是否关闭=="是") 
+                {
+                    model.盘点名称 += "(已关闭)";
+                }
                 list.Add(model);
             }
             return list;
@@ -384,7 +424,7 @@ namespace PLM_SQLDAL
 
         public int 关闭清查盘点(int ID)
         {
-            string sql = string.Format("UPDATE dbo.AM_盘点清查主表  SET 是否关闭 = '是' where ID = {0}",ID);
+            string sql = string.Format("UPDATE dbo.AM_盘点清查主表  SET 是否关闭 = '是' where ID = {0}", ID);
             return Convert.ToInt32(DBHelper.ExecuteNonQuery(DBHelper.ConnectionString, CommandType.Text, sql));
         }
         #endregion
