@@ -55,13 +55,13 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
             三级单位.EmptyText = "全部";
 
 
-            List<AM_盘点清查主表> listpd = bll.查询盘点主表();
+            List<AM_盘点清查主表> listpd = bll.查询盘点主表("否");
 
 
             if (listpd.Count == 0)
             {
                 盘点名称.Text = "当前没有正在进行的任务";
-                Grid1.EmptyText = "<div class=\"grid-empty-text\">Oops...一条数据也没有找到！</div>";
+                Grid1.EmptyText = "<div class=\"grid-empty-text\">当前没有正在进行的资产清查任务！</div>";
                 SelectContentBtn.Enabled = false;
             }
             else 
