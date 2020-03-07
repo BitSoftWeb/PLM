@@ -248,6 +248,8 @@ namespace FineUIPro.EmptyProjectNet40.PLM设备信息
             bt.Save(Server.MapPath("~/photos/") + filename + ".jpg");
             //图片控件要显示的二维码图片路径
             this.Image3.ImageUrl = "~/photos/" + filename + ".jpg";
+
+            Image1.ImageUrl = "~/images/" +  "不锈钢车顶组成点焊机" + ".jpg";
         }
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)

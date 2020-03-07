@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AM_待办业务.cs" />
+    <Compile Include="AM_提醒通知.cs" />
     <Compile Include="AM_盘点清查主表.cs" />
     <Compile Include="AM_部门级别汇总.cs" />
     <Compile Include="Model录入盘点信息.cs" />

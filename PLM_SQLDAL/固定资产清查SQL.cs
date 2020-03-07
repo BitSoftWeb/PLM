@@ -26,13 +26,13 @@ namespace PLM_SQLDAL
                 list.Add(model);
                 sql = ("SELECT * FROM SYS_BD_二级机构表 ");
             }
-            else 
+            else
             {
                 sql = string.Format("SELECT * FROM SYS_BD_二级机构表 where ID = {0}", ID);
             }
-           
+
             SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());
-           
+
             while (read.Read())
             {
                 用户单位表 model = new 用户单位表();
@@ -48,7 +48,7 @@ namespace PLM_SQLDAL
         {
             string sql = "";
             List<部门表> list = new List<部门表>();
-      
+
             部门表 modelx = new 部门表();
             modelx.ID = 0;
             modelx.名称 = "全部";
@@ -120,11 +120,11 @@ namespace PLM_SQLDAL
                 sb.Append(" 设备_设备信息表.制造商,设备_设备信息表.投产时间,设备_设备信息表.设备规格, b.ID as 已盘点ID ,b.盘点主表ID,b.二级部门ID,b.三级部门ID,b.二级部门名称 ");
                 sb.Append(" ,b.三级部门名称,b.操作人,b.操作日期,b.盘点类型,b.帐物是否相符,b.盘盈或盘亏简要原因,b.闲置或待报废简要原因 ");
                 sb.Append(" from 设备_设备信息表 , AM_已盘点设备表 as b  where b.设备编号 = 设备_设备信息表.设备编号 and 盘点主表ID =" + 盘点主表ID);
-                if (部门ID!=0)
+                if (部门ID != 0)
                 {
                     sb.Append(" and b.二级部门ID =" + 部门ID);
                 }
-             
+
                 sb.Append(" and b.盘点类型='" + 盘点类型 + "'");
                 sb.Append(" )as tt  ");
                 sb.Append(" where");
@@ -282,11 +282,11 @@ namespace PLM_SQLDAL
                 {
                     sql = string.Format(" SELECT  COUNT(*) AS 总数 FROM AM_已盘点设备表 as a , 设备_设备信息表 as b where A.设备台账ID = B.ID AND A.盘点主表ID ={0}   AND A.盘点类型 = '{1}'", 盘点主表ID, 盘点类型);
                 }
-                else 
+                else
                 {
                     sql = string.Format(" SELECT  COUNT(*) AS 总数 FROM AM_已盘点设备表 as a , 设备_设备信息表 as b where A.设备台账ID = B.ID AND A.盘点主表ID ={0}  AND A.二级部门ID ={1} AND A.盘点类型 = '{2}'", 盘点主表ID, 部门ID, 盘点类型);
                 }
-              
+
             }
             return Convert.ToInt32(DBHelper.ExecuteScalar(DBHelper.ConnectionString, CommandType.Text, sql));
         }
@@ -294,8 +294,41 @@ namespace PLM_SQLDAL
 
         public int 创建盘点主表(AM_盘点清查主表 model)
         {
-            string sql = string.Format("INSERT INTO   dbo.AM_盘点清查主表(创建人,盘点范围,盘点方式,创建时间,盘点名称,备注,是否关闭 ) VALUES('{0}','{1}','{2}','{3}','{4}','{5}','{6}')", model.创建人, model.盘点范围, model.盘点方式, model.创建时间, model.盘点名称, model.备注, model.是否关闭);
-            return Convert.ToInt32(DBHelper.ExecuteNonQuery(DBHelper.ConnectionString, CommandType.Text, sql));
+            string sql = string.Format("INSERT INTO   dbo.AM_盘点清查主表(创建人,盘点范围,盘点方式,创建时间,盘点名称,备注,是否关闭 ) VALUES('{0}','{1}','{2}','{3}','{4}','{5}','{6}' ) SELECT  @@identity", model.创建人, model.盘点范围, model.盘点方式, model.创建时间, model.盘点名称, model.备注, model.是否关闭);
+            int ID = Convert.ToInt32(DBHelper.ExecuteScalar(DBHelper.ConnectionString, CommandType.Text, sql));
+            //消息中心
+            AM_提醒通知 ammodel = new AM_提醒通知();
+            ammodel.发起人 = model.创建人;
+            ammodel.发起时间 = DateTime.Now;
+            ammodel.是否已读 = "否";
+            ammodel.通知类型 = "系统通知";
+            ammodel.通知职务 = "所有人";
+            ammodel.消息内容 = "您来自" + model.创建人 + "的固定资产清查通知！";
+            ammodel.消息事项 = "固定资产清查";
+            ammodel.FlowID = ID;
+            ammodel.处理职务 = "所有人";
+            ammodel.处理方式 = "职务";
+            ammodel.处理人 = "所有人";
+            ammodel.FlowName = "固定资产清查";
+            ammodel.流程状态 = "正在进行";
+            ammodel.Sort = 1;
+            PLMUtility.插入消息中心(ammodel);
+
+            AM_待办业务 dbmodel = new AM_待办业务();
+            dbmodel.处理职务 = "所有人";
+            dbmodel.发起人 = model.创建人;
+            dbmodel.FlowID = ID;
+            dbmodel.流程状态 = "正在进行";
+            dbmodel.事项名称 = "固定资产清查";
+            dbmodel.通知内容 = "您来自" + model.创建人 + "的固定资产清查通知,请及时处理！";
+            dbmodel.发起时间 = DateTime.Now.ToLongDateString();
+            dbmodel.处理方式 = "所有人";
+            dbmodel.处理人 = "所有人";
+            dbmodel.FlowName = "固定资产清查";
+            dbmodel.Sort = 1;
+            PLMUtility.插入待办中心(dbmodel);
+            //return num;
+            return ID;
 
         }
 
@@ -307,9 +340,9 @@ namespace PLM_SQLDAL
             {
                 sql = "SELECT ID,盘点名称,是否关闭 FROM dbo.AM_盘点清查主表   order by 创建时间 desc";
             }
-            else 
+            else
             {
-                sql =string.Format("SELECT ID,盘点名称,是否关闭 FROM dbo.AM_盘点清查主表 where  是否关闭 ='{0}' order by 创建时间 desc", 是否关闭);
+                sql = string.Format("SELECT ID,盘点名称,是否关闭 FROM dbo.AM_盘点清查主表 where  是否关闭 ='{0}' order by 创建时间 desc", 是否关闭);
             }
 
             SqlDataReader read = DBHelper.ExecuteReader(DBHelper.ConnectionString, CommandType.Text, sql.ToString());
@@ -320,7 +353,7 @@ namespace PLM_SQLDAL
                 model.ID = Convert.ToInt32(read["ID"]);
                 model.盘点名称 = read["盘点名称"].ToString();
                 model.是否关闭 = read["是否关闭"].ToString();
-                if (是否关闭=="是") 
+                if (是否关闭 == "是")
                 {
                     model.盘点名称 += "(已关闭)";
                 }

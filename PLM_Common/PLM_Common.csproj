@@ -68,8 +68,15 @@
     <Compile Include="JSONHELP.cs" />
     <Compile Include="JSONHelper.cs" />
     <Compile Include="OfficeOfPDF.cs" />
+    <Compile Include="PLMUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PLM_Model\PLM_Model.csproj">
+      <Project>{576B6809-D2C7-4BF6-BF5B-3B1895369DB8}</Project>
+      <Name>PLM_Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

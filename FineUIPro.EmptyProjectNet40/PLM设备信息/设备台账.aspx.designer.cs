@@ -237,7 +237,7 @@ namespace FineUIPro.EmptyProjectNet40.PLM设备信息
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image1;
+        protected global::FineUIPro.Image Image1;
 
         /// <summary>
         /// Image3 控件。
