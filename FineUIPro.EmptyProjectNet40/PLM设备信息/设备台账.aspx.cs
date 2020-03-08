@@ -247,9 +247,9 @@ namespace FineUIPro.EmptyProjectNet40.PLM设备信息
             //保存二维码图片在photos路径下
             bt.Save(Server.MapPath("~/photos/") + filename + ".jpg");
             //图片控件要显示的二维码图片路径
-            this.Image3.ImageUrl = "~/photos/" + filename + ".jpg";
+            this.Image1.ImageUrl = "~/photos/" + filename + ".jpg";
 
-            Image1.ImageUrl = "~/images/" +  "不锈钢车顶组成点焊机" + ".jpg";
+           
         }
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
@@ -386,13 +386,12 @@ namespace FineUIPro.EmptyProjectNet40.PLM设备信息
             }
         }
 
-
-
-
-
-
-
-
-
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            图片预览.Hidden = false;
+            图片预览.Title = "二维码预览";
+            //Image1.ImageUrl = "~/images/" + "不锈钢车顶组成点焊机" + ".jpg";
+             CreateQRImg("123");
+        }
     }
 }
