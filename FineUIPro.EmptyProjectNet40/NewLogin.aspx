@@ -82,7 +82,7 @@
         </div>
            <div class="sk-rotating-plane"></div>
             <div style="width: 100%; text-align: center; margin-top: 10px;">*********©1997-2020   ICP备案 粤B2-20090191-18 粤公网安备 44010602000311 增值电信业务许可证 粤B2-20090191  B2-20090058 （数据来源：艾媒邮箱报告）</div>
-        </div>
+        
     </form>
 </body>
 </html>
