@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="固定资产清查BLL.cs" />
+    <Compile Include="备件信息管理BLL.cs" />
     <Compile Include="备件统计分析BLL.cs" />
     <Compile Include="用户操作BLL.cs" />
     <Compile Include="设备台账BLL.cs" />
