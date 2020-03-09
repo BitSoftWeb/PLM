@@ -104,6 +104,7 @@
     <Content Include="PLM设备信息\HtmlPage1.html" />
     <Content Include="PLM设备信息\全生命周期页面.aspx" />
     <Content Include="PLM设备信息\圆形进度条.aspx" />
+    <Content Include="PLM设备信息\备件信息管理.aspx" />
     <Content Include="PLM设备信息\设备台账.aspx" />
     <Content Include="PLM设备信息\设备名称预防性维修.aspx" />
     <Content Include="PLM设备信息\设备履历.aspx" />
@@ -1912,6 +1913,13 @@
     <Compile Include="PLM设备信息\圆形进度条.aspx.designer.cs">
       <DependentUpon>圆形进度条.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PLM设备信息\备件信息管理.aspx.cs">
+      <DependentUpon>备件信息管理.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PLM设备信息\备件信息管理.aspx.designer.cs">
+      <DependentUpon>备件信息管理.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PLM设备信息\设备台账.aspx.cs">
       <DependentUpon>设备台账.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2065,6 +2073,10 @@
       <Project>{576b6809-d2c7-4bf6-bf5b-3b1895369db8}</Project>
       <Name>PLM_Model</Name>
       <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\PLM_SQLDAL\PLM_SQLDAL.csproj">
+      <Project>{7DBFFE28-D3F6-494B-BBA7-3833A800A281}</Project>
+      <Name>PLM_SQLDAL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

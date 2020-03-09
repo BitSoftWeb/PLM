@@ -70,7 +70,7 @@
                                     <f:TreeNode Text="台账信息管理" NavigateUrl="PLM设备信息/设备台账.aspx" IconUrl="res/icon/QSMZQ1.png"></f:TreeNode>
                                     <f:TreeNode Text="分类信息管理"></f:TreeNode>
                                     <f:TreeNode Text="卡片信息管理"></f:TreeNode>
-                                    <f:TreeNode Text="备件信息管理"></f:TreeNode>
+                                    <f:TreeNode Text="备件信息管理" NavigateUrl="PLM设备信息/备件信息管理.aspx"></f:TreeNode>
                                 </f:TreeNode>
 
 

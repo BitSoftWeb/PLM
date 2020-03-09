@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="固定资产清查SQL.cs" />
+    <Compile Include="备件信息管理SQl.cs" />
     <Compile Include="备件统计分析SQL.cs" />
     <Compile Include="用户操作SQL.cs" />
     <Compile Include="设备台账SQL.cs" />

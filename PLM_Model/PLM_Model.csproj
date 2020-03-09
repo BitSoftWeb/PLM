@@ -46,6 +46,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Z_一级结构表.cs" />
     <Compile Include="Z_设备类型表.cs" />
+    <Compile Include="备件信息管理.cs" />
     <Compile Include="消息中心Model.cs" />
     <Compile Include="用户单位表.cs" />
     <Compile Include="Model精度检测.cs" />
