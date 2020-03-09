@@ -1,4 +1,5 @@
 ﻿using PLM.BusinessRlues;
+using PLM_Common;
 using PLM_Model;
 using System;
 using System.Collections.Generic;
@@ -18,24 +19,22 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
             if (!IsPostBack)
             {
 
-                OffSession();
-                int 用户二级部门ID = Convert.ToInt32(Session["二级部门ID"]);
-                List<用户单位表> list = bll.查询用户二级单位(用户二级部门ID);
-                if (list != null)
-                {
-                    二级单位.Text = list[0].名称;
-                    //二级ID = list[0].ID;
-                }
+                int bmidtwo = Convert.ToInt32(SessionHelper.Get("二级部门ID"));
+                List<用户单位表> list = bll.查询用户二级单位(bmidtwo);
 
-                List<部门表> listbm = bll.查询用户所在三级部门(用户二级部门ID);
+                二级单位.DataTextField = "名称";
+                二级单位.DataValueField = "ID";
+                二级单位.DataSource = list;
+                二级单位.DataBind();
+
+                List<部门表> listbm = bll.查询用户所在三级部门(bmidtwo);
                 三级单位.DataTextField = "名称";
                 三级单位.DataValueField = "ID";
                 三级单位.DataSource = listbm;
                 三级单位.DataBind();
-                三级单位.EmptyText = "全部";
 
 
-                List<AM_盘点清查主表> listpd = bll.查询盘点主表();
+                List<AM_盘点清查主表> listpd = bll.查询盘点主表("");
                 盘点名称.DataTextField = "盘点名称";
                 盘点名称.DataValueField = "ID";
                 盘点名称.DataSource = listpd;
@@ -44,30 +43,11 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
         }
 
 
-        private void OffSession()
-        {
-            try
-            {
-                if (Session["用户名"].ToString() == null)
-                {
-                    Response.Write("<script>alert('Session已失效，请点击系统名称返回登录页面')</script>");
-                    Response.End();
-                }
-                else
-                {
-                    //不等于null
-                }
-            }
-            catch (Exception)
-            {
-                Response.Write("<script>alert('Session已失效，请点击系统名称返回登录页面')</script>");
-                Response.End();
-            }
-        }
+
         private void BindGrid()
         {
             if (Convert.ToInt32(盘点名称.SelectedValue) > 0)
-            {
+            {  
                 Grid1.DataSource = bll.查询盘点统计(Convert.ToInt32(盘点名称.SelectedValue), 盘点名称.SelectedText);
                 Grid1.DataBind();
             }
@@ -109,6 +89,17 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
 
         protected void 三级单位_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+        }
+
+        protected void 二级单位_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int 二级ID = Convert.ToInt32(二级单位.SelectedValue);
+            List<部门表> listbm = bll.查询用户所在三级部门(二级ID);
+            三级单位.DataTextField = "名称";
+            三级单位.DataValueField = "ID";
+            三级单位.DataSource = listbm;
+            三级单位.DataBind();
 
         }
     }

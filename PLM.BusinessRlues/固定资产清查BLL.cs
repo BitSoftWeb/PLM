@@ -37,9 +37,9 @@ namespace PLM.BusinessRlues
             return sql.创建盘点主表(model);
         }
 
-        public List<AM_盘点清查主表> 查询盘点主表()
+        public List<AM_盘点清查主表> 查询盘点主表(string 是否关闭)
         {
-            return sql.查询盘点主表();
+            return sql.查询盘点主表(是否关闭);
         }
 
         public int 插入已盘点设备表(List<Model录入盘点信息> listmodel)

@@ -1,5 +1,6 @@
 ﻿using mydddd.Web.code;
 using PLM.BusinessRlues;
+using PLM_Common;
 using PLM_Model;
 using System;
 using System.Collections;
@@ -18,7 +19,6 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
     public partial class 查询已盘点数据 : System.Web.UI.Page
     {
         固定资产清查BLL bll = new 固定资产清查BLL();
-        string username = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -28,21 +28,24 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
         }
         private void LoadData()
         {
-            int 用户二级部门ID = Convert.ToInt32(Session["二级部门ID"]);
-            List<用户单位表> list = bll.查询用户二级单位(用户二级部门ID);
-            if (list != null)
-            {
-                二级单位.Text = list[0].名称;
-                //二级ID = list[0].ID;
-            }
-            List<部门表> listbm = bll.查询用户所在三级部门(用户二级部门ID);
+
+            string 二级部门ID = SessionHelper.Get("二级部门ID");
+            int bmidtwo = Convert.ToInt32(二级部门ID);
+            List<用户单位表> list = bll.查询用户二级单位(bmidtwo);
+
+            二级单位.DataTextField = "名称";
+            二级单位.DataValueField = "ID";
+            二级单位.DataSource = list;
+            二级单位.DataBind();
+
+
+            List<部门表> listbm = bll.查询用户所在三级部门(bmidtwo);
             三级单位.DataTextField = "名称";
             三级单位.DataValueField = "ID";
             三级单位.DataSource = listbm;
             三级单位.DataBind();
-            三级单位.EmptyText = "全部";
 
-            List<AM_盘点清查主表> listpd = bll.查询盘点主表();
+            List<AM_盘点清查主表> listpd = bll.查询盘点主表("");
             盘点名称.DataTextField = "盘点名称";
             盘点名称.DataValueField = "ID";
             盘点名称.DataSource = listpd;
@@ -51,8 +54,8 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
         protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
         {
             string name = 三级单位.SelectedText;
-            int 用户二级部门ID = Convert.ToInt32(Session["二级部门ID"]);
-            string str盘点类型= 盘点类型.SelectedText;
+            int 用户二级部门ID = Convert.ToInt32(二级单位.SelectedValue);
+            string str盘点类型 = 盘点类型.SelectedText;
             int 盘点主表ID = Convert.ToInt32(盘点名称.SelectedValue);
             if (name == "全部")
             {
@@ -77,7 +80,7 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
         {
             string str盘点类型 = 盘点类型.SelectedText;
             string name = 三级单位.SelectedText;
-            int 用户二级部门ID = Convert.ToInt32(Session["二级部门ID"]);
+            int 用户二级部门ID = Convert.ToInt32(二级单位.SelectedValue);
             int 盘点主表ID = Convert.ToInt32(盘点名称.SelectedValue);
             if (name == "全部")
             {
@@ -89,8 +92,6 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
             else
             {
                 int ID = Convert.ToInt32(三级单位.SelectedValue);
-                //Grid1.RecordCount = bll.查询盘点设备总数(name, ID);
-                //DataTable table = GetSourceData();
                 Grid1.RecordCount = bll.查询已盘点总数(盘点主表ID, ID, "部门", str盘点类型);
                 Grid1.DataSource = bll.查询已盘点数据(盘点主表ID, ID, "", "部门", str盘点类型, Grid1.PageIndex, Grid1.PageSize);
                 Grid1.DataBind();
@@ -121,10 +122,14 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
         protected void SelectContentBtn_Click(object sender, EventArgs e)
         {
             string name = 三级单位.SelectedText;
-            int 用户二级部门ID = Convert.ToInt32(Session["二级部门ID"]);
+            int 用户二级部门ID = Convert.ToInt32(二级单位.SelectedValue);
             string str盘点类型 = 盘点类型.SelectedText;
             int 盘点主表ID = Convert.ToInt32(盘点名称.SelectedValue);
-            if (name == "全部")
+            if (二级单位.SelectedText=="全部")
+            {
+
+            }
+            if (name == "全部" || name == null)
             {
                 Grid1.RecordCount = bll.查询已盘点总数(盘点主表ID, 用户二级部门ID, "全部", str盘点类型);
                 Grid1.DataSource = bll.查询已盘点数据(盘点主表ID, 用户二级部门ID, "", "全部", str盘点类型, Grid1.PageIndex, Grid1.PageSize);
@@ -256,5 +261,14 @@ namespace FineUIPro.EmptyProjectNet40.资产清查盘点
 
         }
 
+        protected void 二级单位_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int 二级ID = Convert.ToInt32(二级单位.SelectedValue);
+            List<部门表> listbm = bll.查询用户所在三级部门(二级ID);
+            三级单位.DataTextField = "名称";
+            三级单位.DataValueField = "ID";
+            三级单位.DataSource = listbm;
+            三级单位.DataBind();
+        }
     }
 }

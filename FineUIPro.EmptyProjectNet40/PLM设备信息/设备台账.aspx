@@ -23,8 +23,6 @@
                                 <f:Tree ID="Tree1" IsFluid="true" CssClass="blockpanel" ShowHeader="true" Title="树控件" EnableCollapse="false"
                                     runat="server" Height="900px" EnableSingleExpand="true" OnNodeCommand="Tree1_NodeCommand">
                                 </f:Tree>
-
-
                                 <f:Grid ID="Grid1" Title="数据表格" PageSize="15" IsFluid="true" CssClass="blockpanel" ShowBorder="true" BoxFlex="1" AllowPaging="true" IsDatabasePaging="false" ShowHeader="true" runat="server" DataKeyNames="ID,SBID,SAP编号,设备编号,设备名称,设备规格,设备型号,投产时间,部门名称,单位名称,使用单位" OnRowCommand="Grid1_RowCommand">
                                     <Toolbars>
                                         <f:Toolbar ID="Toolbar2" runat="server">
@@ -45,11 +43,11 @@
                                                     ShowTrigger1="false"
                                                     Trigger1Icon="Clear" Trigger2Icon="Search" Width="300">
                                                 </f:TwinTriggerBox>
-                                                    <f:DropDownList AutoPostBack="false" Required="true"   EnableSimulateTree="true"
-                                                    ShowRedStar="true" runat="server" ID="ddlBox" Width="400" >
+                                                <f:DropDownList AutoPostBack="false" Required="true" EnableSimulateTree="true"
+                                                    ShowRedStar="true" runat="server" ID="ddlBox" Width="400">
                                                 </f:DropDownList>
 
-                                                
+
 
                                             </Items>
                                         </f:Toolbar>
@@ -136,7 +134,8 @@
                                             <f:TextBox runat="server" Label="所属单位" ID="所属单位" Width="400px" LabelWidth="110"></f:TextBox>
                                             <br />
 
-                                            <asp:Image ID="Image1" runat="server" ImageUrl="~/res/images/wzp.gif" Width="400" Height="270" AlternateText="图片" />
+                                           <%-- <f:Image ID="Image1" runat="server" Width="400" Height="270"></f:Image>--%>
+
                                             &nbsp
                                             <%--<asp:Image ID="Image2" runat="server"   Width="400" Height="270" AlternateText="图片"  />--%>
                                             <%--     <h3>设备二维码</h3>--%>
@@ -238,17 +237,12 @@
                                 </f:Tab>
                             </Tabs>
                         </f:TabStrip>
-
-                        <%--        <f:Button ID="Button3" CssClass="marginr" ValidateForms="SimpleForm1"
-                            Text="验证第一个标签中的表单" runat="server">
-                        </f:Button>
-                        <f:Button ID="Button4" Text="打开下一个标签"  runat="server">
-                        </f:Button>--%>
                     </Items>
                     <Toolbars>
                         <f:Toolbar ID="Toolbar1" Position="Bottom" ToolbarAlign="Right" runat="server">
                             <Items>
                                 <f:Button ID="btnClose" Icon="SystemClose" runat="server" Text="关闭"></f:Button>
+                                <f:Button ID="Button1" Icon="SystemClose" runat="server" Text="查看图片" OnClick="Button1_Click"></f:Button>
                             </Items>
                         </f:Toolbar>
                     </Toolbars>
@@ -256,6 +250,16 @@
             </Items>
         </f:Window>
 
+
+
+
+
+            <f:Window ID="图片预览" Title="图片预览" runat="server" Hidden="true" EnableIFrame="false"
+                    EnableMaximize="true" Target="Self" EnableResize="false" IsModal="true" Width="590px" Height="480px">
+                    <Items>
+                        <f:Image ID="Image1" runat="server" Margin="20px" ImageHeight="400px" ImageWidth="550px"></f:Image>
+                    </Items>
+                </f:Window>
 
 
 
