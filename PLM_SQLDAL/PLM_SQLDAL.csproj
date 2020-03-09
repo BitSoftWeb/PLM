@@ -50,10 +50,6 @@
     <Compile Include="设备故障SQL.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PLM_Common\PLM_Common.csproj">
-      <Project>{21e1c6d7-660b-45d3-bdf5-c15d0c0088e0}</Project>
-      <Name>PLM_Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PLM_Model\PLM_Model.csproj">
       <Project>{576b6809-d2c7-4bf6-bf5b-3b1895369db8}</Project>
       <Name>PLM_Model</Name>
